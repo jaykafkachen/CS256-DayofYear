@@ -89,7 +89,7 @@ void dayofyear::getDay()
 		cout << "Enter day between 1-365: \n";
 		cin >> d;
 		if (d < 1 || d>365)
-			cout << "";
+			cout << "Invalid date";
 	} while (d < 1 || d>365);
 	myDay = d;
 }
