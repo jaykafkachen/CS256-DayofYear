@@ -1,10 +1,8 @@
 #include "stdafx.h"
 #include <stdlib.h> 
 #include <string>
-#include <sstream>
 #include <iostream>
 	using namespace std;
-#include <fstream>
 
 class dayofyear {
 public:
