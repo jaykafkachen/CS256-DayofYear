@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 	using namespace std;
+#include <fstream>
 
 class dayofyear {
 public:
@@ -34,11 +35,6 @@ dayofyear::dayofyear(string month, int day)
 {
 	myMonth = month;
 	myDay = day;
-}
-
-dayofyear::dayofyear(const dayofyear &temp)
-{
-	myDay = temp.myDay;
 }
 
 dayofyear dayofyear::operator++()
