@@ -97,7 +97,7 @@ void dayofyear::getDay()
 void dayofyear::print()
 {
 	int month = myDay / 30;
-	string mo = months[month];
+	string mo = months[month-1];
 	int day = myDay;
 
 	while (day > daysInMonth(month))
