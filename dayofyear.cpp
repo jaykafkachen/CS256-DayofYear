@@ -25,7 +25,7 @@ private:
 	int daysInMonth(int month);
 	int calcDays();
 	string months[12] { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" } ;
-};      //for some reason the compiler requires that the array bounds are input
+};
 
 dayofyear::dayofyear(int day = 0)
 {
@@ -77,7 +77,7 @@ int dayofyear::calcDays()
 	const int days[12] = { 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
 	int mo = 0;
 	int remaining = myDay;
-	while (remaining > days[mo] && mo<12)
+	while (days[mo]<myDay && mo<12)
 	{
 		remaining -= daysInMonth(++mo);
 	}
@@ -93,7 +93,7 @@ void dayofyear::getDay()
 		cout << "Enter day between 1-365: ";
 		cin >> d;
 		if (d < 1 || d>365)
-			cout << "Invalid date";
+			cout << "Invalid date" << endl;
 	} while (d < 1 || d>365);
 	myDay = d;
 }
