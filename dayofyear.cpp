@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <array>
 #include <string>
+#include <locale>  
 #include <iostream>
 using namespace std;
 #include <fstream>
@@ -13,6 +14,8 @@ public:
 	dayofyear(string month, int day);
 	void setDay(int day);  // set values for dayofyear
 	void getDay();  // get day from keyboard
+	void getMonth();
+	void getDayperMo(); // get day from keyboard bounded by month 
 	void print();
 
 	//in/decrement
@@ -24,7 +27,9 @@ private:
 	string myMonth;
 	int daysInMonth(int month);
 	int calcDays();
-	string months[12] { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" } ;
+	const string months[12] { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" } ;
+	const int days[12] = { 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
+	bool monthEntered = false;
 };
 
 dayofyear::dayofyear(int day = 0)
@@ -32,10 +37,11 @@ dayofyear::dayofyear(int day = 0)
 	myDay = day;
 }
 
-dayofyear::dayofyear(string month, int day)
+dayofyear::dayofyear(string month = "", int day=0)
 {
 	myMonth = month;
 	myDay = day;
+	monthEntered = true;
 }
 
 dayofyear dayofyear::operator++()
@@ -74,7 +80,6 @@ int dayofyear::daysInMonth(int month)
 
 int dayofyear::calcDays()
 {	
-	const int days[12] = { 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
 	int mo = 0;
 	int remaining = myDay;
 	while (days[mo]<myDay && mo<12)
@@ -98,17 +103,61 @@ void dayofyear::getDay()
 	myDay = d;
 }
 
+void dayofyear::getDayperMo()
+{
+  int mo = 0;
+	while (days[mo]<myDay && mo<12)	{ ++mo;	}
+	int d = 0;
+	int upper = days[mo];
+	int lower = days[mo] - daysInMonth(mo);
+	do
+	{
+		cout << "Enter day for month of " << myMonth << ": ";
+		cin >> d;
+		if (d < lower || d>upper)
+			cout << "Invalid date" << endl;
+	} while (d < lower || d>upper);
+	myDay = d;
+}
+
+void dayofyear::getMonth()
+{
+  int mo;
+	do
+	{
+		cout << "Enter month as a value between 1-12: ";
+		cin >> mo;
+		if (mo < 1 || mo>12)
+			cout << "Invalid month" << endl;
+	} while (mo < 1 || mo>12);
+	myMonth = months[mo-1];
+  monthEntered = true;
+}
+
 void dayofyear::print()
 {
-  int day = calcDays();
-	cout << "Day " << myDay << " is " << myMonth << " " << day << endl;
+  if(monthEntered)
+  {
+    cout << "Date is " << myMonth << " " << myDay << endl;
+  }
+  else
+  {
+    int day = calcDays();
+	  cout << "Day " << myDay << " is " << myMonth << " " << day << endl;
+  }
 }
 
 int main()
 {
+  cout << "Day of Year tester: " << endl;
 	dayofyear day(0);
 	day.getDay();
 	day.print();
+	cout << "\nDay and Month tester: " << endl;
+	dayofyear daymo("", 0);
+	daymo.getMonth();
+	daymo.getDayperMo();
+	daymo.print();
 	return 0;
 }
 
